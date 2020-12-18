@@ -20,6 +20,7 @@ public class MainServer {
         statement = conn.createStatement();
     }
     public static void main(String[] args) throws Exception {
+        String hello;
         System.out.println("Starting Server...");
         createConnection();
         Runnable handlemysql = () -> {
