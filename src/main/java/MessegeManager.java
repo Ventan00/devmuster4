@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class MessegeManager {
+    int abc = 123;
     JSONObject response = new JSONObject();
     public MessegeManager(String function, JSONArray data) throws SQLException, IOException {
         switch (function){
