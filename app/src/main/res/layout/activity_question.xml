@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/container_bg"
+    tools:context=".QuestionActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:background="@drawable/top_nav_bg"
+        android:gravity="center">
+        <Button
+            android:onClick="closeAnswer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:textColor="@color/very_light_gray"
+            android:textStyle="normal"
+            android:textAllCaps="false"
+            android:text="Cancel"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Answers"
+            android:textStyle="bold"
+            android:textColor="@color/dark_gray"
+            android:textSize="18sp"
+            android:textAlignment="center"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:textColor="@color/nice_blue"
+            android:textAllCaps="false"
+            android:visibility="invisible"
+            android:clickable="false"
+            android:enabled="false"
+            android:text="Done"/>
+    </LinearLayout>
+
+    <include layout="@layout/questions_list"/>
+
+    <ListView
+        android:id="@+id/answersList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginVertical="20dp"
+        android:divider="@color/transparent"
+        android:dividerHeight="20dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/bottom_nav_bg"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/input_bg"
+            android:hint="Answer a question..."
+            android:textColorHint="@color/very_light_gray"
+            android:paddingLeft="10dp"/>
+
+
+            <ImageButton
+                android:onClick="sendAnswer"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="20dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/send"/>
+    </LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

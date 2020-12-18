@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="20dp"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="10dp">
+        <ImageButton
+            android:id="@+id/userAvatar"
+            android:layout_width="48dp"
+            android:background="@drawable/user"
+            android:layout_height="48dp"
+            android:layout_marginEnd="20dp" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="0dp"
+            android:orientation="vertical"
+            android:gravity="center|left">
+            <TextView
+                android:id="@+id/answerUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/light_gray"
+                android:text="Name"/>
+            <TextView
+                android:id="@+id/answerHoursAgo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/very_light_gray"
+                android:text="0 hours ago" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/answerContent"
+        android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_height="match_parent"
+        android:textColor="@color/dark_gray"
+        android:text="To jest elegancka odpowiedz fgs gdg dsgds gsd sgdg dssgd g sdg sd gsd gsd gsd sdg gdsg sdg sdg sdg sd gsd"/>
+</LinearLayout>

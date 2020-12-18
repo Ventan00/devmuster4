@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">quandaHakaton</string>
+    <string name="home">Qanda</string>
+    <string name="questions">QUESTIONS</string>
+    <string name="ranking">RANKING</string>
+    <string name="profile">PROFILE</string>
+
+    <string name="categories_prompt">Choose a category</string>
+
+    <string-array name="categories_arrays">
+        <item>#Stosunki_Miedzynarodowe</item>
+        <item>#Informatyka</item>
+        <item>#Matematyka</item>
+        <item>#Fizyka</item>
+        <item>#Historia</item>
+    </string-array>
+
+</resources>

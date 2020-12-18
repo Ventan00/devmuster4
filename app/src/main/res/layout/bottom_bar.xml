@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="70dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:id="@+id/bottom_nav"
+    android:background="@drawable/bottom_nav_bg"
+    android:gravity="center">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_weight="1"
+        android:gravity="center">
+        <ImageButton
+            android:id="@+id/home"
+            android:onClick="home"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/home_icon"
+            android:background="@color/transparent"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_weight="1"
+        android:gravity="center">
+        <ImageButton
+            android:id="@+id/questions"
+            android:onClick="questions"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/search_icon"
+            android:background="@color/transparent"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_weight="1"
+        android:gravity="center">
+        <ImageButton
+            android:id="@+id/ranking"
+            android:onClick="ranking"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ranking_icon"
+            android:background="@color/transparent"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_weight="1"
+        android:gravity="center">
+        <LinearLayout
+            android:id="@+id/profileContainer"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:gravity="center">
+            <ImageButton
+                android:id="@+id/profile"
+                android:onClick="profile"
+                android:layout_width="42dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/user"
+                android:padding="0dp"
+                android:background="@color/transparent"
+                android:layout_height="42dp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

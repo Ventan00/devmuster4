@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/container_bg"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:id="@+id/loginPane"
+    tools:context=".ProfileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_marginHorizontal="50dp"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/logo"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dark_gray"
+            android:textAlignment="center"
+            android:layout_marginBottom="30dp"
+            android:textStyle="bold"
+            android:textSize="30dp"
+            android:text="Quanda"/>
+
+        <EditText
+            android:id="@+id/lUsername"
+            android:layout_width="match_parent"
+            android:background="@drawable/input_bg"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="10dp"
+            android:hint="username"
+            android:textColor="@color/dark_gray"
+            android:textColorHint="@color/very_light_gray"
+            android:layout_height="40dp"/>
+
+        <EditText
+            android:inputType="textPassword"
+            android:id="@+id/lPassword"
+            android:layout_width="match_parent"
+            android:background="@drawable/input_bg"
+            android:paddingLeft="10dp"
+            android:hint="password"
+            android:textColor="@color/dark_gray"
+            android:textColorHint="@color/very_light_gray"
+            android:layout_height="40dp"/>
+
+        <Button
+            android:onClick="logIn"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:textColor="@color/nice_blue"
+            android:layout_marginTop="30dp"
+            android:text="Log In"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/dark_gray"
+                android:text="Don't have an account? "/>
+            <TextView
+                android:onClick="switchToRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/nice_blue"
+                android:textStyle="bold"
+                android:text="Create now!"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom">
+        <include layout="@layout/bottom_bar"/>
+    </LinearLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
