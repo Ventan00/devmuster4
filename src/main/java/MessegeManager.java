@@ -12,7 +12,6 @@ import java.util.UUID;
 
 public class MessegeManager {
     JSONObject response = new JSONObject();
-    int blahblah = 123;
     public MessegeManager(String function, JSONArray data) throws SQLException, IOException {
         switch (function){
             case "isUserInDB":{
@@ -76,7 +75,6 @@ public class MessegeManager {
                 break;
             }
         }
-        int zxy = 15;
     }
 
     public JSONObject getResponse() {
