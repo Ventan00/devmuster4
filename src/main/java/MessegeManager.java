@@ -1,20 +1,16 @@
-import com.mysql.cj.xdevapi.JsonArray;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Base64;
-import java.util.List;
-import java.util.UUID;
 
 public class MessegeManager {
-    JSONObject response = new JSONObject();
-    public MessegeManager(String function, JSONArray data) throws SQLException, IOException {
+    private JSONObject response = new JSONObject();
+    private ClientHandler user;
+    public MessegeManager(ClientHandler user,String function, JSONArray data, byte[][] images) throws SQLException, IOException {
+        this.user = user;
         switch (function){
-            case "isUserInDB":{
+            /*case "isUserInDB":{
                 response.put("function","isUserInDB");
                 isUserInDB(data.getString(0), data.getString(1));
                 break;
@@ -74,14 +70,18 @@ public class MessegeManager {
                 putAnswer(data.getInt(0),data.getString(1),data.getInt(2),data.getInt(3),data.getString(4));
                 break;
             }
+            */
         }
+    }
+    public MessegeManager(ClientHandler user, String function, JSONArray data) throws IOException, SQLException {
+        this(user,function,data,null);
     }
 
     public JSONObject getResponse() {
         return response;
     }
 
-    //działa (dodać avatar)
+    /*//działa (dodać avatar)
     private void loadProfil(String uuid) throws SQLException {
         ResultSet set = MainServer.createStatement().executeQuery("SELECT * FROM RegisteredUser WHERE uuid='"+uuid+"';");
         set.next();
@@ -188,7 +188,7 @@ public class MessegeManager {
             boolean premium = set2.getBoolean("isPremium");
             if(searches<=7 || premium){
                 //możesz zdobyć te pytania
-                ResultSet answers = MainServer.getStatement().executeQuery("SELECT * FROM Answer a INNER JOIN RegisteredUser r ON r.uuid = a.uuid WHERE questionId="+qid+";");
+                ResultSet answers = MainServer.createStatement().executeQuery("SELECT * FROM Answer a INNER JOIN RegisteredUser r ON r.uuid = a.uuid WHERE questionId="+qid+";");
                 JSONArray answer =  new JSONArray();
                 while (answers.next()){
                     JSONObject temp = new JSONObject();
@@ -213,7 +213,7 @@ public class MessegeManager {
             int searches = set.getInt("searches");
             if(searches<=3){
                 //możesz zdobyć te pytania
-                ResultSet answers = MainServer.getStatement().executeQuery("SELECT * FROM Answer a INNER JOIN RegisteredUser r ON r.uuid = a.uuid WHERE questionId="+qid+";");
+                ResultSet answers = MainServer.createStatement().executeQuery("SELECT * FROM Answer a INNER JOIN RegisteredUser r ON r.uuid = a.uuid WHERE questionId="+qid+";");
                 JSONArray answer =  new JSONArray();
                 while (answers.next()){
                     JSONObject temp = new JSONObject();
@@ -388,4 +388,5 @@ public class MessegeManager {
             response.put("success", set !=0); // ???
         }
     }
+    */
 }
