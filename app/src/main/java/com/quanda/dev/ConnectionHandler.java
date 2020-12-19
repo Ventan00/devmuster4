@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.quanda.dev.Data.Data;
+import com.quanda.dev.Data.Question;
 
 import org.json.JSONArray;
 import org.json.JSONException;

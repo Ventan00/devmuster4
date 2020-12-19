@@ -1,4 +1,4 @@
-package com.quanda.dev;
+package com.quanda.dev.Adapters;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -10,7 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.w3c.dom.Text;
+import com.quanda.dev.Data.Anserw;
+import com.quanda.dev.R;
 
 import java.util.List;
 

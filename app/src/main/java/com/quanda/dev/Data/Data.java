@@ -1,6 +1,8 @@
-package com.quanda.dev;
+package com.quanda.dev.Data;
 
 import android.provider.Settings;
+
+import com.quanda.dev.HomeActivity;
 
 public class Data {
     public static String uuid = null;

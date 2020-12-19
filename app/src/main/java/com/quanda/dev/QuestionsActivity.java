@@ -12,6 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.quanda.dev.Adapters.CustomArrayAdapter;
+import com.quanda.dev.Adapters.QuestionListAdapter;
+import com.quanda.dev.Data.Alert;
+import com.quanda.dev.Data.Data;
+import com.quanda.dev.Data.Question;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

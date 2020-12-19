@@ -12,6 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
+import com.quanda.dev.Adapters.QuestionListAdapter;
+import com.quanda.dev.Data.Alert;
+import com.quanda.dev.Data.Data;
+import com.quanda.dev.Data.Question;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 

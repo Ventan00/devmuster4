@@ -1,4 +1,4 @@
-package com.quanda.dev;
+package com.quanda.dev.Data;
 
 import android.view.View;
 import com.google.android.material.snackbar.Snackbar;

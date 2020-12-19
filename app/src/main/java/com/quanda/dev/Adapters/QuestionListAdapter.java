@@ -1,9 +1,7 @@
-package com.quanda.dev;
+package com.quanda.dev.Adapters;
 
 
 import android.app.Activity;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.json.JSONException;
+import com.quanda.dev.ProfileActivity;
+import com.quanda.dev.Data.Question;
+import com.quanda.dev.R;
 
-import java.io.IOException;
 import java.util.List;
 
 public class QuestionListAdapter extends ArrayAdapter<Question> {

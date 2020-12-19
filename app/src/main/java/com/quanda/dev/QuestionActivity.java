@@ -9,6 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.quanda.dev.Adapters.AnswersListAdapter;
+import com.quanda.dev.Data.Anserw;
+import com.quanda.dev.Data.Question;
+
 import java.util.ArrayList;
 import java.util.List;
 
