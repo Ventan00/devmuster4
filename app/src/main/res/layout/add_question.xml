@@ -117,9 +117,18 @@
             android:text="Camera"/>
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/includedImages"
-        android:layout_width="match_parent"
+    <HorizontalScrollView
         android:layout_marginHorizontal="20dp"
-        android:layout_height="wrap_content"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" >
+        <LinearLayout
+            android:id="@+id/horizontal_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
 </androidx.appcompat.widget.LinearLayoutCompat>
