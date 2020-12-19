@@ -45,7 +45,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@color/transparent"
-                            android:src="@drawable/icon_notification"
+                            android:src="@drawable/icon_avatar"
                             android:layout_marginEnd="15dp"/>
                         <ImageButton
                             android:onClick="edit"
