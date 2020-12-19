@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -147,6 +148,10 @@ public class QuestionsActivity extends AppCompatActivity implements BottomNavMan
 
             public void addHorizontalView(Bitmap imageBitmap) {
                 LinearLayout horizontalContainer = findViewById(R.id.horizontal_container);
+                HorizontalScrollView scrollView = findViewById(R.id.scrollView);
+                if (horizontalContainer.getChildCount() <= 0) {
+                    scrollView.setBackground(getDrawable(R.drawable.bg_input));
+                }
 
                 View view = LayoutInflater.from(activity).inflate(R.layout.horizontal_list_item, null);
                 ImageButton removeBtn = view.findViewById(R.id.removeBtn);
@@ -183,9 +188,8 @@ public class QuestionsActivity extends AppCompatActivity implements BottomNavMan
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inPreferredConfig = Bitmap.Config.ARGB_8888;
                 Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
-                Bitmap resized = Bitmap.createScaledBitmap(bitmap, 200, 250, true);
 
-                viewAdder.addHorizontalView(resized);
+                viewAdder.addHorizontalView(bitmap);
                 cursor.close();
             }
         }
