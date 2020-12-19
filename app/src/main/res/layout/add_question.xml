@@ -135,20 +135,25 @@
 
     </LinearLayout>
 
-    <HorizontalScrollView
-        android:id="@+id/scrollView"
-        android:layout_marginVertical="15dp"
-        android:layout_marginHorizontal="20dp"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none" >
-        <LinearLayout
-            android:id="@+id/horizontal_container"
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="15dp"
+        android:layout_marginHorizontal="20dp">
+        <HorizontalScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" />
-    </HorizontalScrollView>
+            android:scrollbars="none" >
+            <LinearLayout
+                android:id="@+id/horizontal_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+    </ScrollView>
+
 </androidx.appcompat.widget.LinearLayoutCompat>
