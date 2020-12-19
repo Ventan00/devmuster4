@@ -14,7 +14,7 @@ public class RankingActivity extends AppCompatActivity implements BottomNavManag
         setContentView(R.layout.activity_ranking);
 
         ImageButton ranking = findViewById(R.id.ranking);
-        ranking.setBackground(getDrawable(R.drawable.item_selected));
+        ranking.setBackground(getDrawable(R.drawable.bg_nav_item_selected));
     }
 
     @Override

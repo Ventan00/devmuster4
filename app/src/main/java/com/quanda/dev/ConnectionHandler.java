@@ -58,7 +58,7 @@ public class ConnectionHandler extends Thread{
     }
 
 
-    //Communication methods
+    //Core communication methods
     private void createConnection() throws IOException, JSONException {
         InetSocketAddress address = new InetSocketAddress("46.41.140.24", 25321);
         socket = new Socket();
@@ -66,11 +66,18 @@ public class ConnectionHandler extends Thread{
         dos = new DataOutputStream(socket.getOutputStream());
         dis = new DataInputStream(socket.getInputStream());
 
+        String uuid = Data.isUUIDStored();
+        if (uuid == null) {
+            handshakeNonRegistered();
+        } else {
+            Data.uuid = uuid;
+        }
+        HomeActivity.homeActivity.getHomeQuestions();
+    }
+    private void handshakeNonRegistered() throws JSONException {
         JSONObject data = new JSONObject();
         data.put("androidID", Data.getAndroidID());
-        sendPacket("handshake", data);
-
-        HomeActivity.homeActivity.getHomeQuestions();
+        sendPacket("handshakeNonRegistered", data);
     }
     private JSONObject readPacket() throws IOException, JSONException {
         JSONObject object = new JSONObject(dis.readUTF());

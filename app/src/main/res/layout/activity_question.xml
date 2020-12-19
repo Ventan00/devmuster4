@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
-        android:background="@drawable/top_nav_bg"
+        android:background="@drawable/bg_border_bottom"
         android:gravity="center">
         <Button
             android:onClick="closeAnswer"
@@ -60,7 +60,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:background="@drawable/bottom_nav_bg"
+        android:background="@drawable/bg_nav"
         android:layout_height="80dp"
         android:gravity="center"
         android:orientation="horizontal">
@@ -70,7 +70,7 @@
             android:layout_weight="1"
             android:layout_height="40dp"
             android:layout_marginHorizontal="20dp"
-            android:background="@drawable/input_bg"
+            android:background="@drawable/bg_input"
             android:hint="Answer a question..."
             android:textColorHint="@color/very_light_gray"
             android:paddingLeft="10dp"/>
@@ -82,6 +82,6 @@
                 android:layout_height="40dp"
                 android:layout_marginRight="20dp"
                 android:scaleType="fitXY"
-                android:background="@drawable/send"/>
+                android:background="@drawable/icon_send"/>
     </LinearLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>

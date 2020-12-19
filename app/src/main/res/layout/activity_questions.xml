@@ -28,7 +28,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:background="@drawable/input_bg"
+                    android:background="@drawable/bg_input"
                     android:paddingLeft="20dp"
                     android:hint="Aaa..."
                     android:textColorHint="@color/very_light_gray"
@@ -44,7 +44,7 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:scaleType="fitXY"
-                        android:background="@drawable/search_icon"/>
+                        android:background="@drawable/icon_search"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
-            android:src="@drawable/plus_icon"
+            android:src="@drawable/icon_plus"
             app:backgroundTint="@color/add_question"
             android:onClick="addQuestion"
             app:maxImageSize="40dp"

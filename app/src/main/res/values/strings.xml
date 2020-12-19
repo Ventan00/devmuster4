@@ -4,7 +4,6 @@
     <string name="questions">QUESTIONS</string>
     <string name="ranking">RANKING</string>
     <string name="profile">PROFILE</string>
-
     <string name="categories_prompt">Choose a category</string>
 
     <string-array name="categories_arrays">
@@ -14,5 +13,4 @@
         <item>#Fizyka</item>
         <item>#Historia</item>
     </string-array>
-
 </resources>

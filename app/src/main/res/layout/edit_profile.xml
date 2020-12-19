@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
-        android:background="@drawable/top_nav_bg"
+        android:background="@drawable/bg_border_bottom"
         android:gravity="center">
         <Button
             android:onClick="cancel"
@@ -54,7 +54,7 @@
         <ImageButton
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:background="@drawable/user"/>
+            android:background="@drawable/icon_avatar"/>
     </LinearLayout>
 
 
@@ -69,106 +69,133 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/profile_data_bg"
+            android:background="@drawable/bg_border_bottom"
             android:paddingVertical="10dp">
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/very_light_gray"
+                android:textColor="@color/dark_gray"
                 android:text="Name"/>
 
             <EditText
                 android:id="@+id/eName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/gray"
                 android:layout_weight="1"
                 android:background="@color/transparent"
-                android:text="name"/>
+                android:textColorHint="@color/very_light_gray"
+                android:hint="name"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/profile_data_bg"
+            android:background="@drawable/bg_border_bottom"
             android:paddingVertical="10dp">
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/very_light_gray"
+                android:textColor="@color/dark_gray"
                 android:text="Surname"/>
 
             <EditText
                 android:id="@+id/eSurname"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/gray"
                 android:layout_weight="1"
                 android:background="@color/transparent"
-                android:text="surname"/>
+                android:textColorHint="@color/very_light_gray"
+                android:hint="surname"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/profile_data_bg"
+            android:background="@drawable/bg_border_bottom"
             android:paddingVertical="10dp">
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/very_light_gray"
+                android:textColor="@color/dark_gray"
                 android:text="Username"/>
 
             <EditText
                 android:id="@+id/eUsername"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/gray"
                 android:layout_weight="1"
                 android:background="@color/transparent"
-                android:text="username"/>
+                android:textColorHint="@color/very_light_gray"
+                android:hint="username"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/profile_data_bg"
+            android:background="@drawable/bg_border_bottom"
             android:paddingVertical="10dp">
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/very_light_gray"
+                android:textColor="@color/dark_gray"
+                android:text="Email"/>
+
+            <EditText
+                android:id="@+id/eEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:textColorHint="@color/very_light_gray"
+                android:hint="email"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_border_bottom"
+            android:paddingVertical="10dp">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/dark_gray"
                 android:text="Contact"/>
 
             <EditText
                 android:id="@+id/eContact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/gray"
                 android:layout_weight="1"
                 android:background="@color/transparent"
-                android:text="contact"/>
+                android:textColorHint="@color/very_light_gray"
+                android:hint="contact"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/profile_data_bg"
+            android:background="@drawable/bg_border_bottom"
             android:paddingVertical="10dp">
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/very_light_gray"
+                android:textColor="@color/dark_gray"
                 android:text="Bio"/>
 
             <EditText
                 android:id="@+id/eBio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/gray"
                 android:layout_weight="1"
                 android:background="@color/transparent"
-                android:text="bio"/>
+                android:textColorHint="@color/very_light_gray"
+                android:hint="bio"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>

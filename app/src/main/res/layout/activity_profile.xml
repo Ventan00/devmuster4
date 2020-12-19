@@ -17,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="20dp"
-            android:background="@drawable/profile_data_bg"
             android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,14 +45,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@color/transparent"
-                            android:src="@drawable/notification"
+                            android:src="@drawable/icon_notification"
                             android:layout_marginEnd="15dp"/>
                         <ImageButton
                             android:onClick="edit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@color/transparent"
-                            android:src="@drawable/pen_icon"/>
+                            android:src="@drawable/icon_pen"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -70,7 +69,7 @@
                         <ImageView
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:src="@drawable/user"/>
+                            android:src="@drawable/icon_avatar"/>
                         <TextView
                             android:id="@+id/profilPoints"
                             android:layout_width="match_parent"
@@ -157,7 +156,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="10dp"
-            android:background="@drawable/test"
+            android:background="@drawable/bg_section"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="match_parent"

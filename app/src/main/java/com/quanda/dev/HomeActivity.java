@@ -31,7 +31,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavManager{
         }
 
         ImageButton home = findViewById(R.id.home);
-        home.setBackground(getDrawable(R.drawable.item_selected));
+        home.setBackground(getDrawable(R.drawable.bg_nav_item_selected));
     }
 
     public void getHomeQuestions() {

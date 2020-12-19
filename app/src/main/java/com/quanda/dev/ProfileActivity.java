@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class ProfileActivity extends AppCompatActivity implements BottomNavManag
         }
 
         LinearLayout profileContainer = findViewById(R.id.profileContainer);
-        profileContainer.setBackground(ContextCompat.getDrawable(this, R.drawable.item_selected));
+        profileContainer.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_nav_item_selected));
     }
 
     public static void updateProfileData(String name,  boolean isPremium, int points, int questions, int answers) {

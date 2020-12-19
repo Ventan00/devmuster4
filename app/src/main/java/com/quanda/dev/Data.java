@@ -8,4 +8,8 @@ public class Data {
     public static String getAndroidID() {
         return Settings.Secure.getString(HomeActivity.homeActivity.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
+
+    public static String isUUIDStored() {
+        return null;
+    }
 }

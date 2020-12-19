@@ -19,7 +19,7 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/logo"/>
+            android:src="@drawable/icon_logo"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -34,7 +34,7 @@
         <EditText
             android:id="@+id/lUsername"
             android:layout_width="match_parent"
-            android:background="@drawable/input_bg"
+            android:background="@drawable/bg_input"
             android:layout_marginBottom="10dp"
             android:paddingLeft="10dp"
             android:hint="username"
@@ -46,7 +46,7 @@
             android:inputType="textPassword"
             android:id="@+id/lPassword"
             android:layout_width="match_parent"
-            android:background="@drawable/input_bg"
+            android:background="@drawable/bg_input"
             android:paddingLeft="10dp"
             android:hint="password"
             android:textColor="@color/dark_gray"
