@@ -21,7 +21,6 @@
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/bg_input"
-                android:src="@drawable/icon_close"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
     </RelativeLayout>
