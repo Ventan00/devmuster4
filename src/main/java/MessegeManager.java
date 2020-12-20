@@ -144,7 +144,6 @@ public class MessegeManager {
             cStmt.execute();
 
             result = cStmt.getInt("retval");
-            System.out.println(result+" "+cStmt.getInt("retval"));
         }
         myObject.put("success",result);
         response.put("data",myObject);
