@@ -109,16 +109,13 @@ public class MessegeManager {
     private void login(ClientHandler user, JSONObject myObject, String username, String password) throws SQLException {
         if(!(username.contains("'")||username.contains("--")||username.contains(";")||username.contains("*")||username.contains("?")||username.contains("%")||username.contains("\\")||username.contains("/"))){
             ResultSet set = MainServer.createStatement().executeQuery("SELECT * FROM RegisteredUser WHERE nick = '"+username+"' AND password = '"+password+"';");
-            System.out.println(username+" "+password);
             if(set.next()){
                 myObject.put("success",true);
                 user.setUuid(UUID.fromString(set.getString("uuid")));
             }else{
-                System.out.println(1);
                 myObject.put("success",false);
             }
         }else{
-            System.out.println(2);
             myObject.put("success",false);
         }
         response.put("data",myObject);
