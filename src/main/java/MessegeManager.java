@@ -9,6 +9,7 @@ import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.UUID;
 
 public class MessegeManager {
     private JSONObject response = new JSONObject();
@@ -29,7 +30,7 @@ public class MessegeManager {
             case "login":{
                 JSONObject myObject = new JSONObject();
                 myObject.put("function","login");
-                login(myObject,data.getString("username"),data.getString("password"));
+                login(user,myObject,data.getString("username"),data.getString("password"));
                 break;
             }
             /*case "isUserInDB":{
@@ -105,12 +106,13 @@ public class MessegeManager {
     public JSONObject getResponse() {
         return response;
     }
-    private void login(JSONObject myObject, String username, String password) throws SQLException {
+    private void login(ClientHandler user, JSONObject myObject, String username, String password) throws SQLException {
         if(!(username.contains("'")||username.contains("--")||username.contains(";")||username.contains("*")||username.contains("?")||username.contains("%")||username.contains("\\")||username.contains("/"))){
             ResultSet set = MainServer.createStatement().executeQuery("SELECT * FROM RegisteredUser WHERE nick = '"+username+"' AND password = '"+password+"'");
             set.next();
             if(set.getFetchSize()==1){
                 myObject.put("success",true);
+                user.setUuid(UUID.fromString(set.getString("uuid")));
             }else{
                 myObject.put("success",false);
             }
