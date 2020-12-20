@@ -71,4 +71,7 @@ public class MainServer {
         }
         return statement;
     }
+    public static Connection getConnection(){
+        return conn;
+    }
 }

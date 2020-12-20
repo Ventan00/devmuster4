@@ -2,14 +2,19 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.sql.CallableStatement;
 import java.sql.SQLException;
+import java.sql.Types;
 
 public class MessegeManager {
     private JSONObject response = new JSONObject();
-    private ClientHandler user;
     public MessegeManager(ClientHandler user,String function, JSONArray data, byte[][] images) throws SQLException, IOException {
-        this.user = user;
         switch (function){
+            case "addQuestion":{
+                JSONObject myObject = new JSONObject();
+                myObject.put("function","addQuestion");
+                addQuestion(myObject,data.getString(0),data.getInt(1),user.toString(),images);
+            }
             /*case "isUserInDB":{
                 response.put("function","isUserInDB");
                 isUserInDB(data.getString(0), data.getString(1));
@@ -73,12 +78,27 @@ public class MessegeManager {
             */
         }
     }
+
     public MessegeManager(ClientHandler user, String function, JSONArray data) throws IOException, SQLException {
         this(user,function,data,null);
     }
 
     public JSONObject getResponse() {
         return response;
+    }
+
+    //new fucntion
+    private void addQuestion(JSONObject myObject, String text, int category_id, String uuid, byte[][] images) throws SQLException {
+        CallableStatement cStmt = MainServer.getConnection().prepareCall("{call insertquestion(?,?,?)}");
+        cStmt.setString("message",text);
+        cStmt.setInt("category",category_id);
+        cStmt.setString("uuid",uuid);
+        cStmt.registerOutParameter("qid", Types.INTEGER);
+
+        cStmt.execute();
+
+        int qid = cStmt.getInt("qid");
+        
     }
 
     /*//działa (dodać avatar)
