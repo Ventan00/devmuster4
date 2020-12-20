@@ -18,7 +18,7 @@ public class MessegeManager {
         switch (function){
             case "addQuestion":{
                 JSONObject myObject = new JSONObject();
-                myObject.put("function","addQuestion");
+                response.put("function","addQuestion");
                 if(user.getUuid()!=null)
                     addQuestion(myObject,data.getString("text"),data.getInt("category"),user.getUuid().toString(),images);
                 else {
@@ -29,7 +29,7 @@ public class MessegeManager {
             }
             case "login":{
                 JSONObject myObject = new JSONObject();
-                myObject.put("function","login");
+                response.put("function","login");
                 login(user,myObject,data.getString("username"),data.getString("password"));
                 break;
             }
@@ -120,6 +120,10 @@ public class MessegeManager {
             myObject.put("success",false);
         }
         response.put("data",myObject);
+    }
+
+    private void register(ClientHandler user, JSONObject myObject, String username, String password){
+
     }
 
     //new fucntion
