@@ -127,21 +127,29 @@ public class MessegeManager {
         response.put("data",myObject);
     }
 
-    private void register(ClientHandler user, JSONObject myObject, String username, String password, String name, String surname, String email) throws SQLException {
-        UUID uuid=null;
+    private void register(ClientHandler user, JSONObject myObject, String username, String password, String name, String surname, String email) {
+        UUID uuid = null;
         int result = 3;
-        while(result==3) {
-            uuid= UUID.randomUUID();
-            CallableStatement cStmt = MainServer.getConnection().prepareCall("{call insertquestion(?,?,?,?,?,?)}");
-            cStmt.setString("INusername",username);
-            cStmt.setString("INpassword",password);
-            cStmt.setString("INname",name);
-            cStmt.setString("INemail",email);
-            cStmt.setString("INsurname",surname);
-            cStmt.setString("INuuid",uuid.toString());
+        try {
+            while (result == 3) {
+                uuid = UUID.randomUUID();
+                CallableStatement cStmt = null;
+
+                cStmt = MainServer.getConnection().prepareCall("{call register(?,?,?,?,?,?)}");
+
+            cStmt.setString("INusername", username);
+            cStmt.setString("INpassword", password);
+            cStmt.setString("INname", name);
+            cStmt.setString("INemail", email);
+            cStmt.setString("INsurname", surname);
+            cStmt.setString("INuuid", uuid.toString());
+            cStmt.registerOutParameter("retval", Types.INTEGER);
             cStmt.execute();
 
             result = cStmt.getInt("retval");
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
         }
         if(result==0){
             user.setUuid(uuid);
