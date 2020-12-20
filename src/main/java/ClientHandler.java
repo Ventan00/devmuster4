@@ -49,19 +49,19 @@ public class ClientHandler extends Thread {
                    for(int i=0;i<array.length();i++){
                        images[i] = Base64.getDecoder().decode(array.getString(i));
                    }
-                   System.out.println("\u001B[33m"+"-->"+"\u001B[0m"+"Sending data for user: "+connection.getRemoteSocketAddress()+"\n");
+                   System.out.println("\u001B[33m"+"-->"+"\u001B[0m"+" Sending data for user: "+connection.getRemoteSocketAddress()+"\n");
                    dos.writeUTF(response.toString());
-                   System.out.println("\u001B[33m"+"-->"+"\u001B[0m"+"Sending images for user: "+connection.getRemoteSocketAddress()+"\n");
+                   System.out.println("\u001B[33m"+"-->"+"\u001B[0m"+" Sending images for user: "+connection.getRemoteSocketAddress()+"\n");
                    for(int i=0;i<array.length();i++){
                        dos.write(images[i]);
                    }
                }else{
-                   System.out.println("\u001B[33m"+"-->"+"\u001B[0m"+"Sending data for user: "+connection.getRemoteSocketAddress()+"\n");
+                   System.out.println("\u001B[33m"+"-->"+"\u001B[0m"+" Sending data for user: "+connection.getRemoteSocketAddress()+"\n");
                    dos.writeUTF(response.toString());
                }
            }
        }catch(Exception e){
-           System.out.println("\u001B[31m"+"User "+connection.getRemoteSocketAddress()+" disconnected!"+"\u001B[0m");
+           System.out.println("\u001B[31m"+" User "+connection.getRemoteSocketAddress()+" disconnected!"+"\u001B[0m");
            MainServer.disconnect(this);
        }
    }
