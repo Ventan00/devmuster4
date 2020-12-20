@@ -33,6 +33,12 @@ public class MessegeManager {
                 login(user,myObject,data.getString("username"),data.getString("password"));
                 break;
             }
+            case "register":{
+                JSONObject myObject = new JSONObject();
+                response.put("function","register");
+                register(user,myObject,data.getString("username"),data.getString("password"),data.getString("firstName"),data.getString("lastName"),data.getString("email"));
+                break;
+            }
             /*case "isUserInDB":{
                 response.put("function","isUserInDB");
                 isUserInDB(data.getString(0), data.getString(1));
@@ -121,8 +127,27 @@ public class MessegeManager {
         response.put("data",myObject);
     }
 
-    private void register(ClientHandler user, JSONObject myObject, String username, String password){
+    private void register(ClientHandler user, JSONObject myObject, String username, String password, String name, String surname, String email) throws SQLException {
+        UUID uuid=null;
+        int result = 3;
+        while(result==3) {
+            uuid= UUID.randomUUID();
+            CallableStatement cStmt = MainServer.getConnection().prepareCall("{call insertquestion(?,?,?,?,?,?)}");
+            cStmt.setString("INusername",username);
+            cStmt.setString("INpassword",password);
+            cStmt.setString("INname",name);
+            cStmt.setString("INemail",email);
+            cStmt.setString("INsurname",surname);
+            cStmt.setString("INuuid",uuid.toString());
+            cStmt.execute();
 
+            result = cStmt.getInt("retval");
+        }
+        if(result==0){
+            user.setUuid(uuid);
+        }
+        myObject.put("success",result);
+        response.put("data",myObject);
     }
 
     //new fucntion
