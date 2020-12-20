@@ -149,9 +149,8 @@ public class MessegeManager {
         response.put("data",myObject);
     }
 
-    //new fucntion
     private void addQuestion(JSONObject myObject, String text, int category_id, String uuid, byte[][] images) throws SQLException {
-        CallableStatement cStmt = MainServer.getConnection().prepareCall("{call insertquestion(?,?,?)}");
+        CallableStatement cStmt = MainServer.getConnection().prepareCall("{call insertquestion(?,?,?,?)}");
         cStmt.setString("message",text);
         cStmt.setInt("category",category_id);
         cStmt.setString("uuid",uuid);
@@ -170,6 +169,10 @@ public class MessegeManager {
         }
         myObject.put("success",true);
         response.put("data",myObject);
+    }
+
+    private void handshakeNonRegistered(JSONObject myObject, String androidID) throws SQLException {
+        int set = MainServer.createStatement().executeUpdate("");
     }
 
     /*//działa (dodać avatar)

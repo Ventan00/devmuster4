@@ -36,12 +36,16 @@ public class ClientHandler extends Thread {
                    int amount = jo.getJSONObject("data").getInt("img");
                    byte[][] images = new byte[amount][];
                    for(int i=0;i<amount;i++){
-                       images[i] = dis.readAllBytes();
+                       int lenght = dis.readInt();
+                       byte[] temp = new byte[lenght];
+                       dis.read(temp);
+                       images[i]=temp;
                    }
                    response = new MessegeManager(this,jo.getString("function"), jo.getJSONObject("data"),images).getResponse();
                }else{
                    response = new MessegeManager(this,jo.getString("function"), jo.getJSONObject("data")).getResponse();
                }
+
                if(response.getJSONObject("data").has("img")){
                    JSONArray array = response.getJSONObject("data").getJSONArray("img");
                    response.getJSONObject("data").put("img",array.length());
