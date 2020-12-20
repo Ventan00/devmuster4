@@ -36,7 +36,7 @@ public class MessegeManager {
             case "register":{
                 JSONObject myObject = new JSONObject();
                 response.put("function","register");
-                register(user,myObject,data.getString("username"),data.getString("password"),data.getString("firstName"),data.getString("lastName"),data.getString("email"));
+                register(myObject,data.getString("username"),data.getString("password"),data.getString("firstName"),data.getString("lastName"),data.getString("email"));
                 break;
             }
             /*case "isUserInDB":{
@@ -127,15 +127,12 @@ public class MessegeManager {
         response.put("data",myObject);
     }
 
-    private void register(ClientHandler user, JSONObject myObject, String username, String password, String name, String surname, String email) {
+    private void register(JSONObject myObject, String username, String password, String name, String surname, String email) throws SQLException {
         UUID uuid = null;
         int result = 3;
-        try {
-            while (result == 3) {
-                uuid = UUID.randomUUID();
-                CallableStatement cStmt = null;
-
-                cStmt = MainServer.getConnection().prepareCall("{call register(?,?,?,?,?,?)}");
+        while (result == 3) {
+            uuid = UUID.randomUUID();
+            CallableStatement cStmt = MainServer.getConnection().prepareCall("{call register(?,?,?,?,?,?,?)}");
 
             cStmt.setString("INusername", username);
             cStmt.setString("INpassword", password);
@@ -147,12 +144,7 @@ public class MessegeManager {
             cStmt.execute();
 
             result = cStmt.getInt("retval");
-            }
-        } catch(SQLException e){
-            e.printStackTrace();
-        }
-        if(result==0){
-            user.setUuid(uuid);
+            System.out.println(result+" "+cStmt.getInt("retval"));
         }
         myObject.put("success",result);
         response.put("data",myObject);
