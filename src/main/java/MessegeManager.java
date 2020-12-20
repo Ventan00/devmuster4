@@ -176,6 +176,54 @@ public class MessegeManager {
         int set = MainServer.createStatement().executeUpdate("");
     }
 
+    private void loadProfile(String uuid) throws SQLException { //Second version to test
+        response.put("function" , "loadProfile");
+        JSONArray data = new JSONArray();
+
+        ResultSet setUser = MainServer.createStatement().executeQuery("SELECT * FROM RegisteredUser WHERE uuid='"+uuid+"';");
+        setUser.next();
+        ResultSet questions = MainServer.createStatement().executeQuery("SELECT COUNT(*) AS `amountQ` FROM Question WHERE uuid='"+uuid+"';");
+        questions.next();
+        ResultSet Miasto = MainServer.createStatement().executeQuery("SELECT city FROM Localisation WHERE id="+setUser.getInt("localisationId"));
+        Miasto.next();
+        ResultSet answersUser = MainServer.createStatement().executeQuery("SELECT COUNT(*) AS `amountA` FROM Answer WHERE uuid = '"+uuid+"';");
+        answersUser.next();
+
+        JSONObject user = new JSONObject();
+        user.put("nick",setUser.getString("nick"));
+        user.put("name",setUser.getString("name"));
+        user.put("surname",setUser.getString("surname"));
+        user.put("isPremium",setUser.getBoolean("isPremium"));
+        user.put("questions",questions.getInt("amountQ"));
+        user.put("answers",answersUser.getInt("amountA"));
+        user.put("phone",setUser.getString("phonenr"));
+        user.put("city",Miasto.getString("city"));
+        data.put(user);
+
+        JSONArray questions2 = new JSONArray();
+        ResultSet set2 = MainServer.createStatement().executeQuery("SELECT q.id AS `qid`, q.uuid AS `uid`, r.nick AS `nick`, r.avatar AS `avatar`, c.name AS `cName`, q.text AS`qText`, q.isFinished AS `isFinished`, q.views AS `qViews`, q.date AS `qDate` FROM Question q INNER JOIN Category c ON c.id=q.categoryId INNER JOIN RegisteredUser r ON r.uuid=q.uuid WHERE r.uuid = '"+uuid+"' ORDER BY q.date DESC LIMIT 0,10");
+        while(set2.next()){
+            ResultSet Answers = MainServer.createStatement().executeQuery("SELECT Count(*) AS `count` FROM Answer WHERE questionId = "+set2.getInt("qid")+';');
+            Answers.next();
+            JSONObject user2 = new JSONObject();
+            user2.put("qid",set2.getInt("qid"));
+            user2.put("nick",set2.getString("nick"));
+            user2.put("date",set2.getTimestamp("qDate"));
+            user2.put("category", set2.getString("cName")); // ?? w protokole napisane jako INT - trzeba zrobic ewentualnie tablice definicji
+            user2.put("text", set2.getString("qText"));
+            user2.put("answersAmount",Answers.getInt("count"));
+            user2.put("views",set2.getInt("qViews"));
+            user2.put("isFinished",set2.getBoolean("isFinished"));
+            //user.put("avatar",User.getBlob("d")==null? "null": new SerialBlob(User.getBlob("avatar").getBytes(1l,(int) User.getBlob("avatar").length())));
+            questions2.put(user2);
+        }
+        data.put(questions2);
+
+        response.put("data",data);
+        byte[] blobAsBytes = setUser.getBlob("avatar").getBytes(1L, (int) setUser.getBlob("avatar").length());
+        response.put("DataOuptputStreamL",blobAsBytes.length);
+        response.put("DataOuptputStream",blobAsBytes);
+    }
     /*//działa (dodać avatar)
     private void loadProfil(String uuid) throws SQLException {
         ResultSet set = MainServer.createStatement().executeQuery("SELECT * FROM RegisteredUser WHERE uuid='"+uuid+"';");
