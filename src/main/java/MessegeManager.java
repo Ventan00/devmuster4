@@ -40,6 +40,12 @@ public class MessegeManager {
                 register(myObject,data.getString("username"),data.getString("password"),data.getString("firstName"),data.getString("lastName"),data.getString("email"));
                 break;
             }
+            case "handshakeNonRegistered":{
+                JSONObject myObject = new JSONObject();
+                response.put("function","handshakeNonRegistered");
+                handshakeNonRegistered(myObject,data.getString("androidID"));
+                break;
+            }
             /*case "isUserInDB":{
                 response.put("function","isUserInDB");
                 isUserInDB(data.getString(0), data.getString(1));
@@ -173,7 +179,11 @@ public class MessegeManager {
     }
 
     private void handshakeNonRegistered(JSONObject myObject, String androidID) throws SQLException {
-        int set = MainServer.createStatement().executeUpdate("");
+        CallableStatement cStmt = MainServer.getConnection().prepareCall("{call addphoneuser(?)}");
+        cStmt.setString("androidID",androidID);
+        cStmt.execute();
+        myObject.put("success",true);
+        response.put("data",myObject);
     }
 
     private void loadProfile(String uuid) throws SQLException { //Second version to test
