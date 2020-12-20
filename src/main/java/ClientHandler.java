@@ -56,6 +56,7 @@ public class ClientHandler extends Thread {
                    dos.writeUTF(response.toString());
                    System.out.println("\u001B[33m"+"-->"+"\u001B[0m"+" Sending images for user: "+connection.getRemoteSocketAddress()+"\n");
                    for(int i=0;i<array.length();i++){
+                       dos.writeInt(images[i].length);
                        dos.write(images[i]);
                    }
                }else{
