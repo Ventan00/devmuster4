@@ -30,15 +30,14 @@ public class ClientHandler extends Thread {
            while (true) {
                String input = dis.readUTF();
                JSONObject jo = new JSONObject(input);
-               System.out.println("\u001B[33m"+"<--"+"\u001B[0m"+connection.getRemoteSocketAddress()+" called: "+jo.getString("function")+"\n");
+               System.out.println("\u001B[33m"+"<--"+"\u001B[0m "+connection.getRemoteSocketAddress()+" called: "+jo.getString("function")+"\n");
                JSONObject response;
                if(jo.getJSONObject("data").has("img")){
                    int amount = jo.getJSONObject("data").getInt("img");
                    byte[][] images = new byte[amount][];
                    for(int i=0;i<amount;i++){
                        int lenght = dis.readInt();
-                       byte[] temp = new byte[lenght];
-                       dis.read(temp);
+                       byte[] temp = dis.readNBytes(lenght);
                        images[i]=temp;
                    }
                    response = new MessegeManager(this,jo.getString("function"), jo.getJSONObject("data"),images).getResponse();

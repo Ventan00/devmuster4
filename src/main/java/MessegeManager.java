@@ -14,13 +14,14 @@ import java.util.UUID;
 public class MessegeManager {
     private JSONObject response = new JSONObject();
     String privateKey="";
-    public MessegeManager(ClientHandler user,String function, JSONObject data, byte[][] images) throws SQLException, IOException {
+    public MessegeManager(ClientHandler user,String function, JSONObject data, byte[][] images) throws SQLException {
         switch (function){
             case "addQuestion":{
                 JSONObject myObject = new JSONObject();
                 response.put("function","addQuestion");
-                if(user.getUuid()!=null)
+                if(user.getUuid()!=null) {
                     addQuestion(myObject,data.getString("text"),data.getInt("category"),user.getUuid().toString(),images);
+                }
                 else {
                     myObject.put("success",false);
                     response.put("data",myObject);
@@ -151,9 +152,9 @@ public class MessegeManager {
 
     private void addQuestion(JSONObject myObject, String text, int category_id, String uuid, byte[][] images) throws SQLException {
         CallableStatement cStmt = MainServer.getConnection().prepareCall("{call insertquestion(?,?,?,?)}");
-        cStmt.setString("message",text);
-        cStmt.setInt("category",category_id);
-        cStmt.setString("uuid",uuid);
+        cStmt.setString("INmessage",text);
+        cStmt.setInt("INcategory",category_id);
+        cStmt.setString("INuuid",uuid);
         cStmt.registerOutParameter("qid", Types.INTEGER);
 
         cStmt.execute();
@@ -165,7 +166,7 @@ public class MessegeManager {
             imStmt.setBlob("image",new SerialBlob(images[i]));
             imStmt.setBoolean("isquestion",true);
 
-            cStmt.execute();
+            imStmt.execute();
         }
         myObject.put("success",true);
         response.put("data",myObject);
