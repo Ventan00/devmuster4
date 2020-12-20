@@ -1,6 +1,9 @@
+import com.mysql.cj.jdbc.Blob;
+import com.mysql.cj.jdbc.BlobFromLocator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
@@ -13,7 +16,12 @@ public class MessegeManager {
             case "addQuestion":{
                 JSONObject myObject = new JSONObject();
                 myObject.put("function","addQuestion");
-                addQuestion(myObject,data.getString(0),data.getInt(1),user.toString(),images);
+                if(user.getUuid()!=null)
+                    addQuestion(myObject,data.getString(0),data.getInt(1),user.getUuid().toString(),images);
+                else {
+                    myObject.put("success",false);
+                    response.put("data",myObject);
+                }
             }
             /*case "isUserInDB":{
                 response.put("function","isUserInDB");
@@ -98,7 +106,16 @@ public class MessegeManager {
         cStmt.execute();
 
         int qid = cStmt.getInt("qid");
-        
+        for(int i=0;i<images.length;i++){
+            CallableStatement imStmt = MainServer.getConnection().prepareCall("{call setgraphic(?,?,?)}");
+            imStmt.setInt("pid",qid);
+            imStmt.setBlob("image",new SerialBlob(images[i]));
+            imStmt.setBoolean("isquestion",true);
+
+            cStmt.execute();
+        }
+        myObject.put("success",true);
+        response.put("data",myObject);
     }
 
     /*//działa (dodać avatar)
