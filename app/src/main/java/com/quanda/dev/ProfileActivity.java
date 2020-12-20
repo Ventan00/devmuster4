@@ -34,7 +34,7 @@ public class ProfileActivity extends AppCompatActivity implements BottomNavManag
         super.onCreate(savedInstanceState);
         profileActivity = this;
 
-        if(Data.uuid != null) {
+        if(Data.isLogged) {
             try {
                 displayProfile();
             } catch (JSONException e) {
@@ -60,7 +60,7 @@ public class ProfileActivity extends AppCompatActivity implements BottomNavManag
     private void displayProfile() throws JSONException {
         setContentView(R.layout.activity_profile);
         setUpList();
-        loadProfile(Data.uuid);
+        //loadProfile(Data.uuid);
     }
     private void displayLoginAndRegister(){
         setContentView(R.layout.login);
@@ -161,9 +161,7 @@ public class ProfileActivity extends AppCompatActivity implements BottomNavManag
 
         ConnectionHandler.sendPacket("register", data);
     }
-    public static void registerError() {
-        // TODO: 12/17/2020
-    }
+
 
     //Login
     public void switchToLogIn(View view) {
@@ -182,9 +180,7 @@ public class ProfileActivity extends AppCompatActivity implements BottomNavManag
 
         ConnectionHandler.sendPacket("login", data);
     }
-    public static void loginError() {
-        // TODO: 12/17/2020
-    }
+
 
     //Navigation
     @Override

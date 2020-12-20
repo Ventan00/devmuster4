@@ -47,7 +47,7 @@
     </LinearLayout>
 
     <Spinner
-        android:id="@+id/static_spinner"
+        android:id="@+id/category_spinner"
         android:popupBackground="@color/white"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

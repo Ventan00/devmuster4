@@ -16,8 +16,8 @@ import com.quanda.dev.Data.Question;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionActivity extends AppCompatActivity {
-    public static QuestionActivity questionActivity;
+public class OpenedQuestionActivity extends AppCompatActivity {
+    public static OpenedQuestionActivity openedQuestionActivity;
     public static Question currQuestion;
     public List<Anserw> answers;
     public AnswersListAdapter adapter;
@@ -26,8 +26,7 @@ public class QuestionActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
-        questionActivity = this;
-
+        openedQuestionActivity = this;
 
 
         ((TextView)findViewById(R.id.userName)).setText(currQuestion.getSenderName());

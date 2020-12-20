@@ -11,7 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Data {
-    public static String uuid = null;
+    public static boolean isLogged = false;
 
     public static String getAndroidID() {
         return Settings.Secure.getString(HomeActivity.homeActivity.getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -43,9 +43,5 @@ public class Data {
             credentials.put("password", decodedPassword);
             return credentials;
         }
-    }
-
-    public static String isUUIDStored() {
-        return null;
     }
 }

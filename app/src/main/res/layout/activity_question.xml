@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/container_bg"
-    tools:context=".QuestionActivity"
+    tools:context=".OpenedQuestionActivity"
     android:orientation="vertical">
 
     <LinearLayout

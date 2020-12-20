@@ -21,6 +21,6 @@
         <activity android:name=".RankingActivity"/>
         <activity android:name=".ProfileActivity"/>
         <activity android:name=".QuestionsActivity"/>
-        <activity android:name=".QuestionActivity"/>
+        <activity android:name=".OpenedQuestionActivity"/>
     </application>
 </manifest>
