@@ -6,22 +6,31 @@ import org.json.JSONObject;
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.sql.CallableStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
 public class MessegeManager {
     private JSONObject response = new JSONObject();
-    public MessegeManager(ClientHandler user,String function, JSONArray data, byte[][] images) throws SQLException, IOException {
+    String privateKey="";
+    public MessegeManager(ClientHandler user,String function, JSONObject data, byte[][] images) throws SQLException, IOException {
         switch (function){
             case "addQuestion":{
                 JSONObject myObject = new JSONObject();
                 myObject.put("function","addQuestion");
                 if(user.getUuid()!=null)
-                    addQuestion(myObject,data.getString(0),data.getInt(1),user.getUuid().toString(),images);
+                    addQuestion(myObject,data.getString("text"),data.getInt("category"),user.getUuid().toString(),images);
                 else {
                     myObject.put("success",false);
                     response.put("data",myObject);
                 }
+                break;
+            }
+            case "login":{
+                JSONObject myObject = new JSONObject();
+                myObject.put("function","login");
+                login(myObject,data.getString("username"),data.getString("password"));
+                break;
             }
             /*case "isUserInDB":{
                 response.put("function","isUserInDB");
@@ -87,12 +96,28 @@ public class MessegeManager {
         }
     }
 
-    public MessegeManager(ClientHandler user, String function, JSONArray data) throws IOException, SQLException {
+
+
+    public MessegeManager(ClientHandler user, String function, JSONObject data) throws IOException, SQLException {
         this(user,function,data,null);
     }
 
     public JSONObject getResponse() {
         return response;
+    }
+    private void login(JSONObject myObject, String username, String password) throws SQLException {
+        if(!(username.contains("'")||username.contains("--")||username.contains(";")||username.contains("*")||username.contains("?")||username.contains("%")||username.contains("\\")||username.contains("/"))){
+            ResultSet set = MainServer.createStatement().executeQuery("SELECT * FROM RegisteredUser WHERE nick = '"+username+"' AND password = '"+password+"'");
+            set.next();
+            if(set.getFetchSize()==1){
+                myObject.put("success",true);
+            }else{
+                myObject.put("success",false);
+            }
+        }else{
+            myObject.put("success",false);
+        }
+        response.put("data",myObject);
     }
 
     //new fucntion

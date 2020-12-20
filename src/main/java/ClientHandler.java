@@ -32,15 +32,15 @@ public class ClientHandler extends Thread {
                JSONObject jo = new JSONObject(input);
                System.out.println("\u001B[33m"+"<--"+"\u001B[0m"+connection.getRemoteSocketAddress()+" called: "+jo.getString("function")+"\n");
                JSONObject response;
-               if(jo.has("img")){
-                   int amount = jo.getInt("img");
+               if(jo.getJSONObject("data").has("img")){
+                   int amount = jo.getJSONObject("data").getInt("img");
                    byte[][] images = new byte[amount][];
                    for(int i=0;i<amount;i++){
                        images[i] = dis.readAllBytes();
                    }
-                   response = new MessegeManager(this,jo.getString("function"), jo.getJSONArray("data"),images).getResponse();
+                   response = new MessegeManager(this,jo.getString("function"), jo.getJSONObject("data"),images).getResponse();
                }else{
-                   response = new MessegeManager(this,jo.getString("function"), jo.getJSONArray("data")).getResponse();
+                   response = new MessegeManager(this,jo.getString("function"), jo.getJSONObject("data")).getResponse();
                }
                if(response.getJSONObject("data").has("img")){
                    JSONArray array = response.getJSONObject("data").getJSONArray("img");
