@@ -110,8 +110,7 @@ public class MessegeManager {
         if(!(username.contains("'")||username.contains("--")||username.contains(";")||username.contains("*")||username.contains("?")||username.contains("%")||username.contains("\\")||username.contains("/"))){
             ResultSet set = MainServer.createStatement().executeQuery("SELECT * FROM RegisteredUser WHERE nick = '"+username+"' AND password = '"+password+"';");
             System.out.println(username+" "+password);
-            set.next();
-            if(set.getFetchSize()==1){
+            if(set.next()){
                 myObject.put("success",true);
                 user.setUuid(UUID.fromString(set.getString("uuid")));
             }else{
