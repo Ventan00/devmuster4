@@ -57,7 +57,7 @@ public class MainServer {
     private static void handlemysql() throws SQLException, ClassNotFoundException {
         Timestamp lastRefresh = new Timestamp(System.currentTimeMillis());
         while (true){
-            if(lastRefresh.compareTo(new Timestamp(System.currentTimeMillis()))>4800000){
+            if(lastRefresh.compareTo(new Timestamp(System.currentTimeMillis()))<4800000){
                 createConnection();
                 lastRefresh=new Timestamp(System.currentTimeMillis());
             }
