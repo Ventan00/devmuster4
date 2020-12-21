@@ -47,6 +47,7 @@
     </LinearLayout>
 
     <Spinner
+        android:verticalScrollbarPosition="left"
         android:id="@+id/category_spinner"
         android:popupBackground="@color/white"
         android:layout_width="fill_parent"

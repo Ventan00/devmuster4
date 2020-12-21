@@ -23,6 +23,7 @@ public class Data {
 
         SharedPreferences sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
         editor.putString("username", encodedUsername);
         editor.putString("password", encodedPassword);
         editor.apply();

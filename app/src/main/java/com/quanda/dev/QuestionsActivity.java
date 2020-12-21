@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
@@ -49,8 +50,8 @@ public class QuestionsActivity extends AppCompatActivity implements BottomNavMan
     private final int CAMERA_REQUEST = 0, GALLERY_REQUEST = 1;
     private List<Bitmap> selectedImages;
 
-    private List<JSONObject> categories = new ArrayList<>();
-    private CategoriesSpinnerAdapter spinnerAdapter;
+    public List<JSONObject> categories = new ArrayList<>();
+    public CategoriesSpinnerAdapter spinnerAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,10 +76,10 @@ public class QuestionsActivity extends AppCompatActivity implements BottomNavMan
     public void addQuestion(View view) {
         if (Data.isLogged) {
             setContentView(R.layout.add_question);
-            Spinner staticSpinner = findViewById(R.id.category_spinner);
+            Spinner spinner = findViewById(R.id.category_spinner);
 
             spinnerAdapter = new CategoriesSpinnerAdapter(this, categories);
-            staticSpinner.setAdapter(spinnerAdapter);
+            spinner.setAdapter(spinnerAdapter);
 
 
             selectedImages = new ArrayList<>();

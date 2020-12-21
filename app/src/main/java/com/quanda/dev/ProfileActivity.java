@@ -2,10 +2,13 @@ package com.quanda.dev;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,6 +31,7 @@ public class ProfileActivity extends AppCompatActivity implements BottomNavManag
     public static ProfileActivity profileActivity;
     public List<Question> questions = new ArrayList<>();
     public QuestionListAdapter adapter;
+    public JSONObject profileInfo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,11 +39,9 @@ public class ProfileActivity extends AppCompatActivity implements BottomNavManag
         profileActivity = this;
 
         if(Data.isLogged) {
-            try {
-                displayProfile();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            displayProfile();
+            profileInfo = new JSONObject();
+            //ConnectionHandler.sendPacket("loadProfile", new JSONObject());
         }else {
             displayLoginAndRegister();
         }
@@ -48,6 +50,11 @@ public class ProfileActivity extends AppCompatActivity implements BottomNavManag
         profileContainer.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_nav_item_selected));
     }
 
+    public void setProfileAvatar(byte[] img) {
+        ImageView profileAvatar = findViewById(R.id.profileAvatar);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(img, 0, img.length);
+        profileAvatar.setImageBitmap(bitmap);
+    }
     public static void updateProfileData(String name,  boolean isPremium, int points, int questions, int answers) {
         profileActivity.runOnUiThread(()->{
             ((TextView)profileActivity.findViewById(R.id.profilName)).setText(name);
@@ -57,10 +64,9 @@ public class ProfileActivity extends AppCompatActivity implements BottomNavManag
             ((TextView)profileActivity.findViewById(R.id.profilPremium)).setText( isPremium ? "Premium Member" : ((TextView)profileActivity.findViewById(R.id.profilPremium)).getText().toString());
         });
     }
-    private void displayProfile() throws JSONException {
+    private void displayProfile() {
         setContentView(R.layout.activity_profile);
         setUpList();
-        //loadProfile(Data.uuid);
     }
     private void displayLoginAndRegister(){
         setContentView(R.layout.login);
@@ -70,12 +76,7 @@ public class ProfileActivity extends AppCompatActivity implements BottomNavManag
         ListView profileList = findViewById(R.id.myQuestions);
         profileList.setAdapter(adapter);
     }
-    public void loadProfile(String uuid) throws JSONException {
-        JSONObject data = new JSONObject();
-        data.put("uuid", uuid);
 
-        ConnectionHandler.sendPacket("loadProfile", data);
-    }
 
     //Edit profile
     public void edit(View view) {
@@ -87,47 +88,6 @@ public class ProfileActivity extends AppCompatActivity implements BottomNavManag
         String eUsername = ((EditText)findViewById(R.id.eUsername)).getText().toString();
         String eContact = ((EditText)findViewById(R.id.eContact)).getText().toString();
         String eBio = ((EditText)findViewById(R.id.eBio)).getText().toString();
-
-        if (eName.contains(" ")){
-            Alert.show(findViewById(R.id.eContainer), "NAME can't contains special chars");
-            return;
-        }
-
-        if (eSurname.contains(" ")){
-            Alert.show(findViewById(R.id.eContainer), "SURNAME can't contains special chars");
-            return;
-        }
-
-        if (eUsername.contains(" ")){
-            Alert.show(findViewById(R.id.eContainer), "USERNAME can't contains special chars");
-            return;
-        }
-
-        if (eName.length() <= 3 || eName.length() >= 20) {
-            Alert.show(findViewById(R.id.eContainer), "NAME length must be between 3-20");
-            return;
-        }
-
-        if (eSurname.length() <= 3 || eSurname.length() >= 20) {
-            Alert.show(findViewById(R.id.eContainer), "Surname length must be between 3-20");
-            return;
-        }
-
-        if (eUsername.length() <= 3 || eUsername.length() >= 20) {
-            Alert.show(findViewById(R.id.eContainer), "Username length must be between 3-20");
-            return;
-        }
-
-        if (eContact.length() >= 30) {
-            Alert.show(findViewById(R.id.eContainer), "Contact length is more than 30");
-            return;
-        }
-
-        if (eBio.length() >= 250) {
-            Alert.show(findViewById(R.id.eContainer), "Bio length is more than 250");
-            return;
-        }
-
 
         Intent intent = new Intent(this, ProfileActivity.class);
         overridePendingTransition(0, 0);
@@ -200,4 +160,5 @@ public class ProfileActivity extends AppCompatActivity implements BottomNavManag
     public void profile(View view) {
         openActivity(this, ProfileActivity.class);
     }
+
 }

@@ -1,6 +1,7 @@
 package com.quanda.dev.Adapters;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,59 +24,62 @@ public class CategoriesSpinnerAdapter extends ArrayAdapter<JSONObject> {
     private Activity context;
 
     public CategoriesSpinnerAdapter(@NonNull Activity context, List<JSONObject> categories) {
-        super(context,  R.layout.simple_spinner_dropdown_item, categories);
+        super(context,  R.layout.category_spinner_dropdown_item, categories);
         this.categories = categories;
         this.context = context;
-
-
-        try {
-            JSONObject object = new JSONObject();
-            object.put("name", "1");
-            categories.add(object);
-            object = new JSONObject();
-            object.put("name", "2");
-            categories.add(object);
-            object = new JSONObject();
-            object.put("name", "3");
-            categories.add(object);
-            object = new JSONObject();
-            object.put("name", "4");
-            categories.add(object);
-            object = new JSONObject();
-            object.put("name", "5");
-            categories.add(object);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     public View getDropDownView(int position, View convertView,
                                 ViewGroup parent) {
-        return customizeView(position);
+        return getDropDownView(position);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        return customizeView(position);
+        return getSelectedView(position);
     }
 
-    private View customizeView(int position) {
+    private View getDropDownView(int position) {
         LayoutInflater inflater = context.getLayoutInflater();
-        View rowView = inflater.inflate(R.layout.simple_spinner_dropdown_item, null, true);
-        TextView categoryNameTextView = rowView.findViewById(R.id.categoryName);
+        View rowView = inflater.inflate(R.layout.category_spinner_dropdown_item, null, true);
+        TextView categoryTextView = rowView.findViewById(R.id.categoryName);
 
         try {
             JSONObject category = categories.get(position);
-            categoryNameTextView.setText(category.getString("name"));
+            categoryTextView.setText(category.getString("name"));
+
+            if (category.getBoolean("isParent")) {
+                categoryTextView.setTypeface(categoryTextView.getTypeface(), Typeface.BOLD);
+                categoryTextView.setTextColor(context.getResources().getColor(R.color.nice_blue));
+                categoryTextView.setBackground(context.getResources().getDrawable(R.drawable.bg_border_top));
+
+                rowView.setEnabled(false);
+                rowView.setOnClickListener((v -> {}));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return rowView;
+    }
+
+
+    private View getSelectedView(int position) {
+        LayoutInflater inflater = context.getLayoutInflater();
+        View rowView = inflater.inflate(R.layout.category_spinner_dropdown_item, null, true);
+        TextView parentCategory = rowView.findViewById(R.id.categoryName);
+
+        try {
+            JSONObject category = categories.get(position);
+            parentCategory.setText(category.getString("name"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         Spinner spinner = context.findViewById(R.id.category_spinner);
         if (position == spinner.getSelectedItemPosition()) {
-            categoryNameTextView.setTextColor(context.getResources().getColor(R.color.nice_blue));
+            parentCategory.setTextColor(context.getResources().getColor(R.color.nice_blue));
         }
 
         return rowView;

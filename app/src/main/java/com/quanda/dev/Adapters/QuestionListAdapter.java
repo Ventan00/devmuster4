@@ -16,6 +16,8 @@ import com.quanda.dev.ProfileActivity;
 import com.quanda.dev.Data.Question;
 import com.quanda.dev.R;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 public class QuestionListAdapter extends ArrayAdapter<Question> {
@@ -67,32 +69,7 @@ public class QuestionListAdapter extends ArrayAdapter<Question> {
             userName.setVisibility(View.GONE);
         }
 
-
-        /*
-        rowView.setOnClickListener((view)->{
-            if (Data.uuid != null) {
-                try {
-                    Question q = (Question) view.getTag();
-                    ConnectionHandler.handler.openQuestion(q.getqId());
-                    this.context.runOnUiThread(()->{
-                        Intent intent = new Intent(this.context, QuestionActivity.class);
-                        QuestionActivity.currQuestion = q;
-
-                        this.context.overridePendingTransition(0, 0);
-                        this.context.startActivity(intent);
-                    });
-                } catch (JSONException | IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                View bNav = context.findViewById(R.id.bottom_nav);
-                if(bNav == null)
-                    return;
-
-                Alert.show(bNav, "Create an account to check answers");
-            }
-        });
-         */
+        userAvatar.setImageBitmap(question.getImgBitMap());
         return rowView;
     }
 }

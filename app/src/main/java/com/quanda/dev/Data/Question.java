@@ -1,5 +1,7 @@
 package com.quanda.dev.Data;
 
+import android.graphics.Bitmap;
+
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -8,6 +10,7 @@ public class Question {
     private int answersAmount, viewsAmount, qId;
     private Timestamp timestamp;
     private boolean isFinished;
+    private Bitmap imgBitMap = null;
 
     public Question(int qId, String senderName, String timestamp, String category, String text, int answersAmount, int viewsAmount, boolean isFinished){
         this.qId = qId;
@@ -51,6 +54,13 @@ public class Question {
     }
     public boolean isFinished() {
         return isFinished;
+    }
+    public Bitmap getImgBitMap() {
+        return imgBitMap;
+    }
+
+    public void setImgBitMap(Bitmap imgBitMap) {
+        this.imgBitMap = imgBitMap;
     }
 
     @Override

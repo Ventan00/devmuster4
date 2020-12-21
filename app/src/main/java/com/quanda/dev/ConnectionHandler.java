@@ -1,6 +1,8 @@
 package com.quanda.dev;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.View;
 
@@ -17,6 +19,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConnectionHandler extends Thread{
@@ -137,7 +140,7 @@ public class ConnectionHandler extends Thread{
     }
 
     //Server orders
-    private void executeGetHomeQuestions(JSONObject data) throws JSONException {
+    private void executeGetHomeQuestions(JSONObject data) throws JSONException, IOException {
         JSONArray questions = data.getJSONArray("questions");
 
         for (int i = 0; i < questions.length(); i++) {
@@ -148,9 +151,23 @@ public class ConnectionHandler extends Thread{
         }
 
         HomeActivity.homeActivity.adapter.notifyDataSetChanged();
+
+        for (int i = 0; i < questions.length(); i++) {
+            int imgLen = dis.readInt();
+            byte[] img = new byte[imgLen];
+            dis.readFully(img, 0 , imgLen);
+            Bitmap imgBitMap = BitmapFactory.decodeByteArray(img, 0, img.length);
+            Question question = HomeActivity.homeActivity.questions.get(i);
+            question.setImgBitMap(imgBitMap);
+
+            HomeActivity.homeActivity.adapter.notifyDataSetChanged();
+        }
+
+
     }
-    public void executeLoadProfile(JSONObject data) throws JSONException {
+    public void executeLoadProfile(JSONObject data) throws JSONException, IOException {
         JSONObject info = data.getJSONObject("info");
+        ProfileActivity.profileActivity.profileInfo = info;
         ProfileActivity.updateProfileData(
                 info.getString("name"),
                 info.getBoolean("isPremium"),
@@ -166,6 +183,13 @@ public class ConnectionHandler extends Thread{
             ProfileActivity.profileActivity.questions.add(question);
         }
         ProfileActivity.profileActivity.adapter.notifyDataSetChanged();
+
+        int imgLen = dis.readInt();
+        if (imgLen != 0) {
+            byte[] img = new byte[imgLen];
+            dis.readFully(img, 0, imgLen);
+            ProfileActivity.profileActivity.setProfileAvatar(img);
+        }
     }
     public void executeRegister(JSONObject data) throws JSONException{
         int success = data.getInt("success");
@@ -212,7 +236,39 @@ public class ConnectionHandler extends Thread{
         }
     }
     public void executeGetCategories(JSONObject data) throws JSONException {
-        JSONArray categories = new JSONArray();
+        JSONArray categoriesArray = data.getJSONArray("categories");
 
+        List<JSONObject> parentsList = new ArrayList<>();
+        for (int i = 0; i<categoriesArray.length(); i++) {
+            JSONObject c = categoriesArray.getJSONObject(i);
+            if (!c.has("pid")) {
+                JSONObject parentCategory = new JSONObject();
+                parentCategory.put("id", c.getInt("id"));
+                parentCategory.put("name", c.getString("name"));
+                parentCategory.put("isParent", true);
+                parentsList.add(parentCategory);
+            }
+        }
+
+        List<JSONObject> rsList = new ArrayList<>();
+        for (JSONObject parentCategory : parentsList) {
+            rsList.add(parentCategory);
+            for (int i = 0; i<categoriesArray.length(); i++) {
+                JSONObject c = categoriesArray.getJSONObject(i);
+
+                if (c.has("pid")){
+                    if (parentCategory.getInt("id") == c.getInt("pid")) {
+                        JSONObject childCategory = new JSONObject();
+                        childCategory.put("id", c.getInt("id"));
+                        childCategory.put("name", c.getString("name"));
+                        childCategory.put("isParent", false);
+                        rsList.add(childCategory);
+                    }
+                }
+            }
+        }
+
+        QuestionsActivity.questionsActivity.categories = rsList;
+        QuestionsActivity.questionsActivity.spinnerAdapter.notifyDataSetChanged();
     }
 }
