@@ -71,7 +71,7 @@ public class MessegeManager {
             myArray.put(object);
         }
         JSONObject temp = new JSONObject();
-        temp.put("categories",temp);
+        temp.put("categories",myArray);
         response.put("data",temp);
     }
 
