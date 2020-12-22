@@ -47,7 +47,7 @@ public class MessegeManager {
             }
             case "loadProfile":{
                 response.put("function","loadProfile");
-                loadProfile(user.getUuid().toString()); //uuid podane przez serwer czy klienta?
+                loadProfile(user); //uuid podane przez serwer czy klienta?
                 break;
             }
             case "getHomeQuestions":{
@@ -157,42 +157,45 @@ public class MessegeManager {
         response.put("data",myObject);
     }
 
-    private void loadProfile(String uuid) throws SQLException { //Second version to test
-        JSONArray data = new JSONArray();
+    private void loadProfile(ClientHandler user) throws SQLException { //Second version to test
+        JSONObject myObject =  new JSONObject();
+        if(user.getUuid()==null){
+            myObject.put("success",false);
+        }else {
+            String uuid = user.getUuid().toString();
+            ResultSet setUser = MainServer.createStatement().executeQuery("SELECT * FROM RegisteredUser WHERE uuid='" + uuid + "';");
+            setUser.next();
 
-        ResultSet setUser = MainServer.createStatement().executeQuery("SELECT * FROM RegisteredUser WHERE uuid='"+uuid+"';");
-        setUser.next();
+            CallableStatement questions = MainServer.getConnection().prepareCall("{call amountQuestion(?,?)}");
+            questions.setString("INuuid", uuid);
+            questions.registerOutParameter("amountQ", Types.INTEGER);
+            questions.execute();
 
-        CallableStatement questions = MainServer.getConnection().prepareCall("{call amountQuestion(?,?)}");
-        questions.setString("INuuid", uuid);
-        questions.registerOutParameter("amountQ", Types.INTEGER);
-        questions.execute();
+            CallableStatement miasto = MainServer.getConnection().prepareCall("{call cityOfUser(?,?)}");
+            miasto.setString("INuuid", uuid);
+            miasto.registerOutParameter("amountQ", Types.VARCHAR);
+            miasto.execute();
 
-        CallableStatement miasto = MainServer.getConnection().prepareCall("{call cityOfUser(?,?)}");
-        miasto.setString("INuuid", uuid);
-        miasto.registerOutParameter("amountQ", Types.VARCHAR);
-        miasto.execute();
+            CallableStatement answersUser = MainServer.getConnection().prepareCall("{call amountAnwser(?,?)}");
+            answersUser.setString("INuuid", uuid);
+            answersUser.registerOutParameter("amountA", Types.INTEGER);
+            answersUser.execute();
 
-        CallableStatement answersUser = MainServer.getConnection().prepareCall("{call amountAnwser(?,?)}");
-        answersUser.setString("INuuid", uuid);
-        answersUser.registerOutParameter("amountA", Types.INTEGER);
-        answersUser.execute();
-
-        JSONArray graphics = new JSONArray();
-        JSONObject user = new JSONObject();
-        user.put("nick",setUser.getString("nick"));
-        user.put("name",setUser.getString("name"));
-        user.put("surname",setUser.getString("surname"));
-        user.put("isPremium",setUser.getBoolean("isPremium"));
-        user.put("questions",questions.getInt("amountQ"));
-        user.put("answers", answersUser.getInt("amountA"));
-        user.put("phone",setUser.getString("phonenr"));
-        user.put("city",miasto.getString("outCity"));
-        Blob blobAvatar = setUser.getBlob("avatar");
-        graphics.put(Base64.getEncoder().encodeToString(blobAvatar.getBytes(0, (int) (blobAvatar.length()-1))));
-        data.put(graphics);
-        data.put(user);
-        response.put("data",data);
+            JSONArray graphics = new JSONArray();
+            JSONObject profile = new JSONObject();
+            profile.put("nick", setUser.getString("nick"));
+            profile.put("name", setUser.getString("name"));
+            profile.put("surname", setUser.getString("surname"));
+            profile.put("isPremium", setUser.getBoolean("isPremium"));
+            profile.put("questions", questions.getInt("amountQ"));
+            profile.put("answers", answersUser.getInt("amountA"));
+            profile.put("phone", setUser.getString("phonenr"));
+            profile.put("city", miasto.getString("outCity"));
+            Blob blobAvatar = setUser.getBlob("avatar");
+            graphics.put(Base64.getEncoder().encodeToString(blobAvatar.getBytes(0, (int) (blobAvatar.length() - 1))));
+            profile.put("img",graphics);
+            response.put("data", profile);
+        }
     }
 
     private void getHomeQuestions () throws SQLException {
@@ -253,5 +256,6 @@ public class MessegeManager {
         }
         response.put("data",myObject);
     }
+
 
 }
