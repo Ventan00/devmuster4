@@ -67,7 +67,8 @@ public class MessegeManager {
             JSONObject object = new JSONObject();
             object.put("id",categories.getInt("id"));
             object.put("name",categories.getString("name"));
-            object.put("pid",categories.getInt("maincat"));
+            Integer tmpint = (Integer) categories.getObject("maincat");
+            if(tmpint != null) object.put("pid",tmpint);
             myArray.put(object);
         }
         JSONObject temp = new JSONObject();
