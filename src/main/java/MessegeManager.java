@@ -1,14 +1,11 @@
-import com.mysql.cj.jdbc.Blob;
 import com.mysql.cj.jdbc.BlobFromLocator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
-import java.sql.CallableStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Types;
+import java.sql.*;
+import java.util.Base64;
 import java.util.UUID;
 
 public class MessegeManager {
@@ -160,6 +157,7 @@ public class MessegeManager {
         ResultSet answersUser = MainServer.createStatement().executeQuery("SELECT COUNT(*) AS `amountA` FROM Answer WHERE uuid = '"+uuid+"';");
         answersUser.next();
 
+        JSONArray graphics = new JSONArray();
         JSONObject user = new JSONObject();
         user.put("nick",setUser.getString("nick"));
         user.put("name",setUser.getString("name"));
@@ -169,6 +167,9 @@ public class MessegeManager {
         user.put("answers",answersUser.getInt("amountA"));
         user.put("phone",setUser.getString("phonenr"));
         user.put("city",Miasto.getString("city"));
+        Blob usera = setUser.getBlob("avatar");
+        graphics.put(Base64.getEncoder().encodeToString(usera.getBytes(0, (int) (usera.length()-1))));
+        data.put(graphics);
         data.put(user);
 
         JSONArray questions2 = new JSONArray();
