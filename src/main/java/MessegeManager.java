@@ -55,6 +55,10 @@ public class MessegeManager {
                 getHomeQuestions();
                 break;
             }
+            case "editProfile":{
+                response.put("function","editProfile");
+                editProfile(user,data,images);
+            }
         }
     }
 
@@ -82,7 +86,6 @@ public class MessegeManager {
         temp.put("categories",myArray);
         response.put("data",temp);
     }
-
 
     private void login(ClientHandler user, String username, String password) throws SQLException {
         JSONObject myObject = new JSONObject();
@@ -217,6 +220,38 @@ public class MessegeManager {
             quest.put("avatar", graphics);
             questions.put(quest);
         }
+    }
+
+    private void editProfile(ClientHandler user, JSONObject data, byte[][] images) throws SQLException {
+        JSONObject myObject = new JSONObject();
+        if(user.getUuid()==null){
+            myObject.put("success",false);
+        }else{
+            String uuid = user.getUuid().toString();
+            String name = (data.has("name")? data.getString("name"):null);
+            String surname = (data.has("surname")? data.getString("surname"):null);
+            String email = (data.has("email")? data.getString("email"):null);
+            String phone = (data.has("phone")? data.getString("phone"):null);
+            String password = (data.has("password")? data.getString("password"):null);
+            String bio = (data.has("bio")? data.getString("bio"):null);
+            SerialBlob avatar = null;
+            if(images.length>0){
+                avatar=new SerialBlob(images[0]);
+            }
+            CallableStatement cStmt = MainServer.getConnection().prepareCall("{call insertquestion(?,?,?,?)}");
+            cStmt.setString("INuuid",uuid);
+            cStmt.setString("INname",name);
+            cStmt.setString("INsurname",surname);
+            cStmt.setString("INemail",email);
+            cStmt.setString("INphone",phone);
+            cStmt.setString("INpassword",password);
+            cStmt.setString("INbio",bio);
+            cStmt.setBlob("INavatar",avatar);
+
+            cStmt.execute();
+            myObject.put("success",true);
+        }
+        response.put("data",myObject);
     }
 
 }
