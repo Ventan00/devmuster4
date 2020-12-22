@@ -45,6 +45,16 @@ public class MessegeManager {
                 getCategories();
                 break;
             }
+            case "loadProfile":{
+                response.put("function","loadProfile");
+                loadProfile(user.getUuid().toString()); //uuid podane przez serwer czy klienta?
+                break;
+            }
+            case "getHomeQuestions":{
+                response.put("function","getHomeQuestions");
+                getHomeQuestions();
+                break;
+            }
         }
     }
 
@@ -145,7 +155,6 @@ public class MessegeManager {
     }
 
     private void loadProfile(String uuid) throws SQLException { //Second version to test
-        response.put("function" , "loadProfile");
         JSONArray data = new JSONArray();
 
         ResultSet setUser = MainServer.createStatement().executeQuery("SELECT * FROM RegisteredUser WHERE uuid='"+uuid+"';");
@@ -184,24 +193,28 @@ public class MessegeManager {
     }
 
     private void getHomeQuestions () throws SQLException {
-        response.put("function" , "getHomeQuestions");
         JSONArray questions = new JSONArray();
+        JSONArray graphics = new JSONArray();
+
         ResultSet setQ = MainServer.createStatement().executeQuery("SELECT q.id AS `qid`, q.uuid AS `uid`, r.avatar AS `avatar`, q.text AS`qText`, q.isFinished AS `isFinished`, q.views AS `qViews`, q.date AS `qDate` FROM Question q INNER JOIN Category c ON c.id=q.categoryId INNER JOIN RegisteredUser r ON r.uuid=q.uuid ORDER BY q.views DESC LIMIT 0,10");
         while(setQ.next()){
-            ResultSet Answers = MainServer.createStatement().executeQuery("SELECT Count(*) AS `count` FROM Answer WHERE questionId = "+setQ.getInt("qid")+';');
-            Answers.next();
+            CallableStatement answers = MainServer.getConnection().prepareCall("{call amountAnwser(?,?)}");
+            answers.setString("INuuid", setQ.getString("qid"));
+            answers.registerOutParameter("amountA", Types.INTEGER);
+            answers.execute();
+
             JSONObject quest = new JSONObject();
             quest.put("qid",setQ.getInt("qid"));
             quest.put("uuid",setQ.getString("uid"));
             quest.put("date",setQ.getTimestamp("qDate"));
             quest.put("category", setQ.getString("cName"));
             quest.put("text", setQ.getString("qText"));
-            quest.put("answersAmount",Answers.getInt("count"));
+            quest.put("answersAmount",answers.getInt("amountA"));
             quest.put("views",setQ.getInt("qViews"));
             quest.put("isFinished",setQ.getBoolean("isFinished"));
-            byte[] blobAsBytes = setQ.getBlob("avatar").getBytes(1L, (int) setQ.getBlob("avatar").length());
-            quest.put("DataOuptputStreamL",blobAsBytes.length);
-            quest.put("DataOuptputStream",blobAsBytes);
+            Blob blobAvatar = setQ.getBlob("avatar");
+            graphics.put(Base64.getEncoder().encodeToString(blobAvatar.getBytes(0, (int) (blobAvatar.length()-1))));
+            quest.put("avatar", graphics);
             questions.put(quest);
         }
     }
