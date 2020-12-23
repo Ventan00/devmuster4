@@ -22,6 +22,10 @@ public class ClientHandler extends Thread {
         this.uuid = uuid;
     }
 
+    public void logout(){
+        uuid=null;
+    }
+
     @Override
     public void run(){
        try{

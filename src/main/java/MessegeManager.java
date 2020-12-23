@@ -45,9 +45,9 @@ public class MessegeManager {
                 getCategories();
                 break;
             }
-            case "loadProfile":{
-                response.put("function","loadProfile");
-                loadProfile(user); //uuid podane przez serwer czy klienta?
+            case "loaMyProfile":{
+                response.put("function","loadMyProfile");
+                loadMyProfile(user);
                 break;
             }
             case "getHomeQuestions":{
@@ -59,6 +59,10 @@ public class MessegeManager {
                 response.put("function","editProfile");
                 editProfile(user,data,images);
             }
+            case "logout":{
+                response.put("function","logout");
+                logout(user,data.getString("androidID"));
+            }
         }
     }
 
@@ -69,6 +73,17 @@ public class MessegeManager {
 
     public JSONObject getResponse() {
         return response;
+    }
+
+    private void logout(ClientHandler user, String androidID) throws SQLException {
+        JSONObject myObject = new JSONObject();
+        if(user.getUuid()!=null){
+            user.logout();
+            handshakeNonRegistered(androidID);
+        }else {
+            myObject.put("success",false);
+            response.put("data",myObject);
+        }
     }
 
     public void getCategories() throws SQLException {
@@ -157,7 +172,7 @@ public class MessegeManager {
         response.put("data",myObject);
     }
 
-    private void loadProfile(ClientHandler user) throws SQLException { //Second version to test
+    private void loadMyProfile(ClientHandler user) throws SQLException { //Second version to test
         JSONObject myObject =  new JSONObject();
         if(user.getUuid()==null){
             myObject.put("success",false);
@@ -194,7 +209,7 @@ public class MessegeManager {
             profile.put("city", miasto.getString("outCity"));
             Blob blobAvatar = setUser.getBlob("avatar");
             if(blobAvatar!=null) {
-                graphics.put(Base64.getEncoder().encodeToString(blobAvatar.getBytes(0, (int) (blobAvatar.length() - 1))));
+                graphics.put(Base64.getEncoder().encodeToString(blobAvatar.getBytes(1, (int) (blobAvatar.length() - 1))));
             }
             profile.put("img",graphics);
             response.put("data", profile);
@@ -253,7 +268,7 @@ public class MessegeManager {
             cStmt.setBlob("INavatar",avatar);
             cStmt.registerOutParameter("outval", Types.INTEGER);
             cStmt.execute();
-            
+
             int a = cStmt.getInt("outval");
             if(a==0)
                 myObject.put("success",true);
