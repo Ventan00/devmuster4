@@ -45,7 +45,7 @@ public class MessegeManager {
                 getCategories();
                 break;
             }
-            case "loaMyProfile":{
+            case "loadMyProfile":{
                 response.put("function","loadMyProfile");
                 loadMyProfile(user);
                 break;
