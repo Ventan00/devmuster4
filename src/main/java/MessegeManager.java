@@ -166,14 +166,14 @@ public class MessegeManager {
             ResultSet setUser = MainServer.createStatement().executeQuery("SELECT * FROM RegisteredUser WHERE uuid='" + uuid + "';");
             setUser.next();
 
-            CallableStatement questions = MainServer.getConnection().prepareCall("{call amountQuestion(?,?)}");
+            CallableStatement questions = MainServer.getConnection().prepareCall("{call amountQuestions(?,?)}");
             questions.setString("INuuid", uuid);
             questions.registerOutParameter("amountQ", Types.INTEGER);
             questions.execute();
 
             CallableStatement miasto = MainServer.getConnection().prepareCall("{call cityOfUser(?,?)}");
             miasto.setString("INuuid", uuid);
-            miasto.registerOutParameter("amountQ", Types.VARCHAR);
+            miasto.registerOutParameter("outCity", Types.VARCHAR);
             miasto.execute();
 
             CallableStatement answersUser = MainServer.getConnection().prepareCall("{call amountAnwser(?,?)}");
@@ -187,12 +187,15 @@ public class MessegeManager {
             profile.put("name", setUser.getString("name"));
             profile.put("surname", setUser.getString("surname"));
             profile.put("isPremium", setUser.getBoolean("isPremium"));
+            profile.put("points", setUser.getInt("points"));
             profile.put("questions", questions.getInt("amountQ"));
             profile.put("answers", answersUser.getInt("amountA"));
             profile.put("phone", setUser.getString("phonenr"));
             profile.put("city", miasto.getString("outCity"));
             Blob blobAvatar = setUser.getBlob("avatar");
-            graphics.put(Base64.getEncoder().encodeToString(blobAvatar.getBytes(0, (int) (blobAvatar.length() - 1))));
+            if(blobAvatar!=null) {
+                graphics.put(Base64.getEncoder().encodeToString(blobAvatar.getBytes(0, (int) (blobAvatar.length() - 1))));
+            }
             profile.put("img",graphics);
             response.put("data", profile);
         }
@@ -235,24 +238,27 @@ public class MessegeManager {
             String surname = (data.has("surname")? data.getString("surname"):null);
             String email = (data.has("email")? data.getString("email"):null);
             String phone = (data.has("phone")? data.getString("phone"):null);
-            String password = (data.has("password")? data.getString("password"):null);
             String bio = (data.has("bio")? data.getString("bio"):null);
             SerialBlob avatar = null;
             if(images.length>0){
                 avatar=new SerialBlob(images[0]);
             }
-            CallableStatement cStmt = MainServer.getConnection().prepareCall("{call insertquestion(?,?,?,?)}");
+            CallableStatement cStmt = MainServer.getConnection().prepareCall("{call editProfile(?,?,?,?,?,?,?,?)}");
             cStmt.setString("INuuid",uuid);
             cStmt.setString("INname",name);
             cStmt.setString("INsurname",surname);
             cStmt.setString("INemail",email);
             cStmt.setString("INphone",phone);
-            cStmt.setString("INpassword",password);
             cStmt.setString("INbio",bio);
             cStmt.setBlob("INavatar",avatar);
-
+            cStmt.registerOutParameter("outval", Types.INTEGER);
             cStmt.execute();
-            myObject.put("success",true);
+            
+            int a = cStmt.getInt("outval");
+            if(a==0)
+                myObject.put("success",true);
+            else
+                myObject.put("success",false);
         }
         response.put("data",myObject);
     }

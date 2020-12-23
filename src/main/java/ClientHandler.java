@@ -66,6 +66,7 @@ public class ClientHandler extends Thread {
            }
        }catch(Exception e){
            System.out.println("\u001B[31m"+" User "+connection.getRemoteSocketAddress()+" disconnected!"+"\u001B[0m");
+           e.printStackTrace();
            MainServer.disconnect(this);
        }
    }
