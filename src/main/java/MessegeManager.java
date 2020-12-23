@@ -203,6 +203,8 @@ public class MessegeManager {
             profile.put("name", setUser.getString("name"));
             profile.put("surname", setUser.getString("surname"));
             profile.put("isPremium", setUser.getBoolean("isPremium"));
+            profile.put("email", setUser.getString("email"));
+            profile.put("bio", setUser.getString("bio"));
             profile.put("points", setUser.getInt("points"));
             profile.put("questions", questions.getInt("amountQ"));
             profile.put("answers", answersUser.getInt("amountA"));
@@ -221,7 +223,7 @@ public class MessegeManager {
         JSONArray questions = new JSONArray();
         JSONArray graphics = new JSONArray();
 
-        ResultSet setQ = MainServer.createStatement().executeQuery("SELECT q.id AS `qid`, q.uuid AS `uid`, r.avatar AS `avatar`, q.text AS`qText`, q.isFinished AS `isFinished`, q.views AS `qViews`, q.date AS `qDate` FROM Question q INNER JOIN Category c ON c.id=q.categoryId INNER JOIN RegisteredUser r ON r.uuid=q.uuid ORDER BY q.views DESC LIMIT 0,10");
+        ResultSet setQ = MainServer.createStatement().executeQuery("SELECT q.id AS `qid`, q.uuid AS `uid`, r.avatar AS `avatar`, q.text AS`qText`, q.isFinished AS `isFinished`, q.views AS `qViews`, q.date AS `qDate`, c.name AS `cName` FROM Question q INNER JOIN Category c ON c.id=q.categoryId INNER JOIN RegisteredUser r ON r.uuid=q.uuid ORDER BY q.views DESC LIMIT 0,10");
         while(setQ.next()){
             CallableStatement answers = MainServer.getConnection().prepareCall("{call amountAnwser(?,?)}");
             answers.setString("INuuid", setQ.getString("qid"));
@@ -238,10 +240,11 @@ public class MessegeManager {
             quest.put("views",setQ.getInt("qViews"));
             quest.put("isFinished",setQ.getBoolean("isFinished"));
             Blob blobAvatar = setQ.getBlob("avatar");
-            graphics.put(Base64.getEncoder().encodeToString(blobAvatar.getBytes(0, (int) (blobAvatar.length()-1))));
+            graphics.put(Base64.getEncoder().encodeToString(blobAvatar.getBytes(1, (int) (blobAvatar.length()-1))));
             quest.put("avatar", graphics);
             questions.put(quest);
         }
+        response.put("data",questions);
     }
 
     private void editProfile(ClientHandler user, JSONObject data, byte[][] images) throws SQLException {
