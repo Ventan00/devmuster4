@@ -176,6 +176,7 @@ public class MessegeManager {
         JSONObject myObject =  new JSONObject();
         if(user.getUuid()==null){
             myObject.put("success",false);
+            response.put("data",myObject);
         }else {
             String uuid = user.getUuid().toString();
             ResultSet setUser = MainServer.createStatement().executeQuery("SELECT * FROM RegisteredUser WHERE uuid='" + uuid + "';");
